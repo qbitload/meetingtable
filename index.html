@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Document</title>
+
+    <style>
+        html, body {
+    margin: 0;
+    padding: 0;
+  }
+  canvas {
+    
+    display: block;
+  }
+  
+    </style>
+</head>
+<body>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r125/three.min.js"></script>
+<!-- <script src="js/OrbitControls.js"></script> -->
+<!-- <script src="/js/GLTFLoader.js"></script> -->
+<!-- <script type="module" src="js/script.js"></script> -->
+
+<script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>    
+<script src="https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js"></script>    
+
+<script type="module">
+// import { OrbitControls } from "https://threejs.org/examples/jsm/controls/OrbitControls.js";
+
+
+var scene, camera, renderer;
+
+scene = new THREE.Scene();
+// scene.background = new THREE.Color(0x5f5f0f);
+
+camera = new THREE.PerspectiveCamera(50,window.innerWidth/window.innerHeight);
+camera.position.set(50,200,400);
+renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setClearColor( 0x000000, 0 ); // the default
+
+
+// renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setSize(window.innerWidth,window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+
+
+var controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.update(); 
+
+
+var abint = new THREE.AmbientLight(0x404040);
+scene.add(abint)
+
+var loader = new THREE.GLTFLoader();
+
+loader.load( 'scene.gltf', function ( gltf ) {
+    gltf.scene.scale.set(1.5,1.5,1.5);
+    scene.add( gltf.scene );
+    
+} );
+
+function animate(){
+
+    requestAnimationFrame(animate);
+    renderer.render(scene,camera);
+}
+
+animate()
+    </script>
+   
+    
+</body>
+</html>
